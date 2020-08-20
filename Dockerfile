@@ -1,3 +1,6 @@
+# start with the official Composer image and name it
+FROM composer:1.9.3 AS composer
+
 FROM php:7.3-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
@@ -52,7 +55,9 @@ RUN apk update --no-cache \
         zip
 
 
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+#RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER 1 
 
 RUN curl -L https://deployer.org/releases/v$DEPLOYER_VERSION/deployer.phar > /usr/local/bin/deployer \
     && chmod +x /usr/local/bin/deployer
