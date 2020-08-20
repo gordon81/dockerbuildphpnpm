@@ -42,7 +42,7 @@ RUN apk update --no-cache \
         rsync \
         openssh \
         curl \
-        python \
+        python3 \
         py-pip \
         jq \
         bash \
