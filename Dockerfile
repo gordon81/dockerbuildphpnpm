@@ -11,3 +11,5 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 
 RUN curl -L https://deployer.org/releases/v$DEPLOYER_VERSION/deployer.phar > /usr/local/bin/deployer \
     && chmod +x /usr/local/bin/deployer
+
+WORKDIR /var/www/html
