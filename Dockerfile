@@ -51,8 +51,6 @@ RUN apk update --no-cache \
         mailcap \
         zip
 
-RUN pecl channel-update pecl.php.net && \
-    pecl install  mcrypt-1.0.1 exif
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
