@@ -1,7 +1,7 @@
 # start with the official Composer image and name it
 FROM composer:1.9.3 AS composer
 
-FROM php:7.3-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
 
