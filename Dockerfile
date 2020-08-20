@@ -1,4 +1,3 @@
-
 FROM php:7.3-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
@@ -51,6 +50,9 @@ RUN apk update --no-cache \
         less \
         mailcap \
         zip
+
+RUN pecl channel-update pecl.php.net \
+    pecl install mcrypt exif imagick-3.4.3
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
