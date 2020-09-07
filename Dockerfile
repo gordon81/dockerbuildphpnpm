@@ -64,7 +64,7 @@ RUN curl -L https://deployer.org/releases/v$DEPLOYER_VERSION/deployer.phar > /us
 
 run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
 
-ARG jenkinsUserId=
+ARG jenkinsUserId=106
 RUN if ! id $jenkinsUserId; then \
     usermod -u ${jenkinsUserId} jenkins; \
     groupmod -g ${nodeId} jenkins; \
