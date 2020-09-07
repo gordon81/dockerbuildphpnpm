@@ -67,8 +67,8 @@ run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 
 
 ARG jenkinsUserId=106
 RUN if ! id $jenkinsUserId; then \
-    usermod -u ${jenkinsUserId} jenkins; \
-    groupmod -g ${nodeId} jenkins; \
+    usermod -u ${jenkinsUserId} www-data; \
+    groupmod -g ${nodeId} www-data; \
   fi
 
 WORKDIR /var/www/html
