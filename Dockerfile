@@ -51,7 +51,8 @@ RUN apk update --no-cache \
         groff \
         less \
         mailcap \
-        zip
+        zip \
+        shadow
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
