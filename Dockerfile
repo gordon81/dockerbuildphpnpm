@@ -65,10 +65,7 @@ RUN curl -L https://deployer.org/releases/v$DEPLOYER_VERSION/deployer.phar > /us
 
 run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
 
-ARG jenkinsUserId=106
-RUN if ! id $jenkinsUserId; then \
-    usermod -u ${jenkinsUserId} www-data; \
-    groupmod -g ${nodeId} www-data; \
-  fi
+run adduser --uid 106 jenkins 
+run addgroup -g 106 jenkins jenkins
 
 WORKDIR /var/www/html
