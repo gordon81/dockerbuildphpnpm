@@ -3,7 +3,7 @@ FROM composer:1.9.3 AS composer
 FROM php:7.2-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
-RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
+
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
@@ -51,8 +51,7 @@ RUN apk update --no-cache \
         groff \
         less \
         mailcap \
-        zip \
-        shadow
+        zip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
@@ -65,7 +64,11 @@ RUN curl -L https://deployer.org/releases/v$DEPLOYER_VERSION/deployer.phar > /us
 
 run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
 
-run adduser --uid=106 jenkins 
-run addgroup -g 106 jenkins jenkins
+ARG PUID=106
+ARG PGID=106
+
+RUN addgroup -g ${PGID} abc && \
+    adduser -D -u ${PUID} -G abc abc
+
 
 WORKDIR /var/www/html
