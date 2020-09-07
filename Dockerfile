@@ -3,7 +3,7 @@ FROM composer:1.9.3 AS composer
 FROM php:7.2-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
-
+RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
