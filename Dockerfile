@@ -53,6 +53,12 @@ RUN apk update --no-cache \
         mailcap \
         zip
 
+RUN docker-php-ext-configure gd \
+        --with-freetype-dir=/usr/lib/ \
+        --with-png-dir=/usr/lib/ \
+        --with-jpeg-dir=/usr/lib/ \
+        --with-gd
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 ENV COMPOSER_CACHE_DIR /.cache/composer
@@ -67,8 +73,8 @@ run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 
 ARG PUID=106
 ARG PGID=106
 
-RUN addgroup -g ${PGID} abc && \
-    adduser -D -u ${PUID} -G abc abc
+RUN addgroup -g ${PGID} jenkins && \
+    adduser -D -u ${PUID} -G jenkins jenkins
 
 
 WORKDIR /var/www/html
