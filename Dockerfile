@@ -62,7 +62,7 @@ RUN apk update --no-cache \
         libjpeg \
         libjpeg-turbo-dev
 
-RUN docker-php-ext-install gd zip
+RUN docker-php-ext-install gd zip mysqli
 RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-configure gd \
