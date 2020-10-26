@@ -61,6 +61,8 @@ RUN apk update --no-cache \
         libjpeg \
         libjpeg-turbo-dev
 
+RUN docker-php-ext-install gd
+
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/lib/ \
         --with-png-dir=/usr/lib/ \
