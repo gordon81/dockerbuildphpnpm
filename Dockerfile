@@ -52,6 +52,7 @@ RUN apk update --no-cache \
         less \
         mailcap \
         zip \
+        libzip-dev \
         freetype \
         libpng \
         libjpeg-turbo \
@@ -61,7 +62,8 @@ RUN apk update --no-cache \
         libjpeg \
         libjpeg-turbo-dev
 
-RUN docker-php-ext-install gd
+RUN docker-php-ext-install gd zip
+RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/lib/ \
