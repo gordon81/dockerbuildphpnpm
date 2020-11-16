@@ -95,8 +95,10 @@ RUN mkdir -p /root/.ssh && \
     chmod 0700 /root/.ssh && \
     touch /root/.ssh/known_hosts
 
+
 RUN mkdir -p /home/jenkins/.ssh && \
     chmod 0700 /home/jenkins/.ssh && \
-    touch /home/jenkins/.ssh/known_hosts
+    touch /home/jenkins/.ssh/known_hosts && \
+    chown -cR jenkins:jenkins /home/jenkins/.ssh
 
 WORKDIR /var/www/html
