@@ -64,7 +64,7 @@ RUN apk update --no-cache \
 
 RUN docker-php-ext-install gd zip
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-
+RUN docker-php-ext-install sockets
 RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-configure gd \
