@@ -7,8 +7,8 @@ ENV DEPLOYER_VERSION=6.8.0
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
-        nodejs \
-        nodejs-current-npm \
+        nodejs-current \
+        nodejs-npm \
         php7 \
         php7-openssl \
         php7-json \
@@ -37,6 +37,7 @@ RUN apk update --no-cache \
         imagemagick-dev \
         git \
         g++ \
+        gcc \
         musl-dev \
         make \
         icu-dev \
