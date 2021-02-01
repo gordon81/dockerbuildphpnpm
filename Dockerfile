@@ -63,7 +63,8 @@ RUN apk update --no-cache \
         libpng-dev \
         jpeg-dev \
         libjpeg \
-        libjpeg-turbo-dev
+        libjpeg-turbo-dev \
+        python2
 
 
 # configure, install and enable all php packages
