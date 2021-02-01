@@ -63,7 +63,8 @@ RUN apk update --no-cache \
         libpng-dev \
         jpeg-dev \
         libjpeg \
-        libjpeg-turbo-dev
+        libjpeg-turbo-dev \
+        python2
 
 RUN docker-php-ext-install gd zip
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
