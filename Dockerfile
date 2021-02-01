@@ -11,29 +11,29 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
-        php7 \
-        php7-openssl \
-        php7-json \
-        php7-phar \
-        php7-gd \
-        php7-intl \
-        php7-zlib \
-        php7-curl \
-        php7-mbstring \
-        php7-iconv \
-        php7-pear \
-        php7-tokenizer \
-        php7-dev \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-dom \
-        php7-xml \
-        php7-simplexml \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-fileinfo \
-        php7-zip \
-        php7-ctype \
+        php8 \
+        php8-openssl \
+        php8-json \
+        php8-phar \
+        php8-gd \
+        php8-intl \
+        php8-zlib \
+        php8-curl \
+        php8-mbstring \
+        php8-iconv \
+        php8-pear \
+        php8-tokenizer \
+        php8-dev \
+        php8-pdo \
+        php8-pdo_mysql \
+        php8-dom \
+        php8-xml \
+        php8-simplexml \
+        php8-xmlreader \
+        php8-xmlwriter \
+        php8-fileinfo \
+        php8-zip \
+        php8-ctype \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
