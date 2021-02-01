@@ -1,5 +1,7 @@
 FROM composer:1.9.3 AS composer
 
+FROM jakubfrajt/docker-ci-php-security-checker AS  checker
+
 FROM php:7.4-fpm-alpine
 
 ENV DEPLOYER_VERSION=6.8.0
@@ -79,6 +81,9 @@ RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
+
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 ENV COMPOSER_CACHE_DIR /.cache/composer
 ENV NPM_CONFIG_CACHE /.cache/npm
