@@ -1,12 +1,14 @@
-FROM composer:1.9.3 AS composer
-FROM node:14-alpine AS node
+FROM composer AS composer
+
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm-alpine3.12
 
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
+        nodejs-current \
+        nodejs-npm \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
@@ -46,6 +48,14 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip
+COPY --from=node /usr/local/include/node /usr/local/include/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
+COPY --from=node /usr/local/bin/yarn /usr/local/bin/yarn
+COPY --from=node /usr/local/bin/yarnpkg /usr/local/bin/yarnpkg
 
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
 RUN docker-php-ext-install -j$(nproc) mysqli
@@ -56,15 +66,6 @@ RUN docker-php-ext-install -j$(nproc) zip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
-COPY --from=node /usr/local/include/node /usr/local/include/node
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
-COPY --from=node /usr/local/bin/yarn /usr/local/bin/yarn
-COPY --from=node /usr/local/bin/yarnpkg /usr/local/bin/yarnpkg
-
-
 
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 ENV COMPOSER_CACHE_DIR /.cache/composer
