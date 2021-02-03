@@ -1,5 +1,5 @@
 FROM composer:1.9.3 AS composer
-
+FROM node:14-alpine AS node
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
 FROM php:7.4-fpm-alpine
@@ -9,31 +9,6 @@ ENV DEPLOYER_VERSION=6.8.0
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
-        nodejs-current \
-        nodejs-npm \
-        php7 \
-        php7-openssl \
-        php7-json \
-        php7-phar \
-        php7-gd \
-        php7-intl \
-        php7-zlib \
-        php7-curl \
-        php7-mbstring \
-        php7-iconv \
-        php7-pear \
-        php7-tokenizer \
-        php7-dev \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-dom \
-        php7-xml \
-        php7-simplexml \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-fileinfo \
-        php7-zip \
-        php7-ctype \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
@@ -82,8 +57,9 @@ RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
+COPY --from=node /usr/bin/node /usr/bin/node
+COPY --from=node /usr/bin/node /usr/bin/node
 
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 ENV COMPOSER_CACHE_DIR /.cache/composer
