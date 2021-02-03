@@ -9,6 +9,7 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
+        yarn \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
