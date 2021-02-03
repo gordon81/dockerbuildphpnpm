@@ -4,8 +4,6 @@ FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
 FROM php:7.4-fpm-alpine
 
-ENV DEPLOYER_VERSION=6.8.0
-
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
@@ -58,14 +56,21 @@ RUN docker-php-ext-install -j$(nproc) zip
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
-COPY --from=node /usr/bin/node /usr/bin/node
-COPY --from=node /usr/bin/node /usr/bin/node
+COPY --from=node /usr/local/include/node /usr/local/include/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
+COPY --from=node /usr/local/bin/yarn /usr/local/bin/yarn
+COPY --from=node /usr/local/bin/yarnpkg /usr/local/bin/yarnpkg
+
+
 
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 ENV COMPOSER_CACHE_DIR /.cache/composer
 ENV NPM_CONFIG_CACHE /.cache/npm
 
-run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
+RUN mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
 
 ARG PUID=106
 ARG PGID=106
