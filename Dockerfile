@@ -40,6 +40,7 @@ RUN apk update --no-cache \
         jpeg-dev \
         libjpeg \
         libjpeg-turbo-dev \
+        exiftool \
         python2
 
 
@@ -49,21 +50,9 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip
-COPY --from=node /usr/local/include/node /usr/local/include/node
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
-COPY --from=node /usr/local/bin/yarn /usr/local/bin/yarn
-COPY --from=node /usr/local/bin/yarnpkg /usr/local/bin/yarnpkg
-
-RUN docker-php-ext-install -j$(nproc) pdo_mysql
-RUN docker-php-ext-install -j$(nproc) mysqli
-RUN docker-php-ext-install -j$(nproc) pdo
-RUN docker-php-ext-install -j$(nproc) gd
-RUN docker-php-ext-install -j$(nproc) intl
-RUN docker-php-ext-install -j$(nproc) zip
+RUN docker-php-ext-configure exif
+RUN docker-php-ext-install -j$(nproc) pdo_mysql mysqli pdo gd intl zip exif
+RUN docker-php-ext-enable exif
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
