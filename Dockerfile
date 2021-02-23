@@ -2,7 +2,7 @@ FROM composer:1.9.3 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:7.3-fpm-alpine
+FROM php:7.3-fpm-alpine3.12
 
 ENV DEPLOYER_VERSION=6.8.0
 
@@ -97,7 +97,6 @@ RUN addgroup -g ${PGID} jenkins && \
 RUN mkdir -p /root/.ssh && \
     chmod 0700 /root/.ssh && \
     touch /root/.ssh/known_hosts
-
 
 RUN mkdir -p /home/jenkins/.ssh && \
     chmod 0700 /home/jenkins/.ssh && \
