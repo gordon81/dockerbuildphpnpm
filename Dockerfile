@@ -2,7 +2,7 @@ FROM composer:1.9.3 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm-alpine3.12
 
 ENV DEPLOYER_VERSION=6.8.0
 
