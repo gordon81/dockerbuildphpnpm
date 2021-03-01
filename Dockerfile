@@ -11,9 +11,6 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
-        imagemagick \
-        imagemagick-libs \
-        imagemagick-dev \
         git \
         g++ \
         gcc \
@@ -41,8 +38,13 @@ RUN apk update --no-cache \
         jpeg-dev \
         libjpeg \
         libjpeg-turbo-dev \
-        python2
-
+        python2 \
+        autoconf \
+        g++ \
+        imagemagick-dev \
+        libtool \
+        make \
+        pcre-dev
 
 # configure, install and enable all php packages
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
@@ -53,10 +55,7 @@ RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/lib/ \
         --with-png-dir=/usr/lib/ \
         --with-jpeg-dir=/usr/lib/ \
-        --with-gd \
-        --enable-gd \
-        --with-freetype \
-        --with-jpeg
+        --with-gd
 
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
 RUN docker-php-ext-install -j$(nproc) mysqli && docker-php-ext-enable mysqli
@@ -64,8 +63,8 @@ RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
+RUN pecl install imagick  && docker-php-ext-enable imagick
 
-RUN  docker-php-ext-enable imagick
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
@@ -92,5 +91,7 @@ RUN mkdir -p /home/jenkins/.ssh && \
     chmod 0700 /home/jenkins/.ssh && \
     touch /home/jenkins/.ssh/known_hosts && \
     chown -cR jenkins:jenkins /home/jenkins/.ssh
+
+RUN apk del autoconf g++ libtool make pcre-dev
 
 WORKDIR /var/www/html
