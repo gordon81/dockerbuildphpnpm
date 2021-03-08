@@ -46,7 +46,8 @@ RUN apk update --no-cache \
         g++ \
         libtool \
         make \
-        pcre-dev
+        pcre-dev \
+        patch
 
 # configure, install and enable all php packages
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
@@ -93,6 +94,5 @@ RUN mkdir -p /home/jenkins/.ssh && \
     touch /home/jenkins/.ssh/known_hosts && \
     chown -cR jenkins:jenkins /home/jenkins/.ssh
 
-RUN apk del autoconf g++ libtool make pcre-dev
 
 WORKDIR /var/www/html
