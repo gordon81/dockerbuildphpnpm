@@ -11,29 +11,6 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
-        php7 \
-        php7-openssl \
-        php7-json \
-        php7-phar \
-        php7-gd \
-        php7-intl \
-        php7-zlib \
-        php7-curl \
-        php7-mbstring \
-        php7-iconv \
-        php7-pear \
-        php7-tokenizer \
-        php7-dev \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-dom \
-        php7-xml \
-        php7-simplexml \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-fileinfo \
-        php7-zip \
-        php7-ctype \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
@@ -64,18 +41,31 @@ RUN apk update --no-cache \
         jpeg-dev \
         libjpeg \
         libjpeg-turbo-dev \
-        python2
+        python2 \
+        autoconf \
+        g++ \
+        libtool \
+        make \
+        pcre-dev
 
-RUN docker-php-ext-install gd zip
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-
+# configure, install and enable all php packages
+RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
+RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd
+RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip
-
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/lib/ \
         --with-png-dir=/usr/lib/ \
         --with-jpeg-dir=/usr/lib/ \
         --with-gd
+
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+RUN docker-php-ext-install -j$(nproc) mysqli && docker-php-ext-enable mysqli
+RUN docker-php-ext-install -j$(nproc) pdo
+RUN docker-php-ext-install -j$(nproc) gd
+RUN docker-php-ext-install -j$(nproc) intl
+RUN docker-php-ext-install -j$(nproc) zip
+RUN pecl install imagick  && docker-php-ext-enable imagick
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -102,5 +92,7 @@ RUN mkdir -p /home/jenkins/.ssh && \
     chmod 0700 /home/jenkins/.ssh && \
     touch /home/jenkins/.ssh/known_hosts && \
     chown -cR jenkins:jenkins /home/jenkins/.ssh
+
+RUN apk del autoconf g++ libtool make pcre-dev
 
 WORKDIR /var/www/html
