@@ -66,6 +66,7 @@ RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
+RUN docker-php-ext-install -j$(nproc) sockets
 RUN pecl install imagick  && docker-php-ext-enable imagick
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
