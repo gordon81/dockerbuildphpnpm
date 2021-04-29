@@ -1,4 +1,4 @@
-FROM composer:1.9.3 AS composer
+FROM composer AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
@@ -11,29 +11,6 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
-        php8 \
-        php8-openssl \
-        php8-json \
-        php8-phar \
-        php8-gd \
-        php8-intl \
-        php8-zlib \
-        php8-curl \
-        php8-mbstring \
-        php8-iconv \
-        php8-pear \
-        php8-tokenizer \
-        php8-dev \
-        php8-pdo \
-        php8-pdo_mysql \
-        php8-dom \
-        php8-xml \
-        php8-simplexml \
-        php8-xmlreader \
-        php8-xmlwriter \
-        php8-fileinfo \
-        php8-zip \
-        php8-ctype \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
