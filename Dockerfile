@@ -4,8 +4,6 @@ FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
 FROM php:7.4-fpm-alpine3.12
 
-ENV DEPLOYER_VERSION=6.8.0
-
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
@@ -89,7 +87,11 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_CACHE_DIR /.cache/composer
 ENV NPM_CONFIG_CACHE /.cache/npm
 
-run mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
+RUN mkdir -p ${COMPOSER_CACHE_DIR} && mkdir -p ${NPM_CONFIG_CACHE} && chmod -cR 777 /.cache
+
+RUN curl -LO https://deployer.org/deployer.phar && \
+mv deployer.phar /usr/local/bin/dep && \
+chmod +x /usr/local/bin/dep
 
 ARG PUID=106
 ARG PGID=106
