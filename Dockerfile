@@ -41,9 +41,11 @@ RUN apk update --no-cache \
         libjpeg \
         libjpeg-turbo-dev \
         exiftool \
-        python2
+        python2 \
+        autoconf \
+        libtool
 
-
+RUN pecl install imagick
 # configure, install and enable all php packages
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
@@ -52,7 +54,10 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-configure exif
 RUN docker-php-ext-install -j$(nproc) pdo_mysql mysqli pdo gd intl zip exif
-RUN docker-php-ext-enable exif
+RUN docker-php-ext-enable exif imagick
+
+RUN apk del autoconf g++ libtool make \
+        && rm -rf /tmp/* /var/cache/apk/*
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=checker /usr/bin/local-php-security-checker /usr/bin/local-php-security-checker
