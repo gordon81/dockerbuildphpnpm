@@ -1,8 +1,8 @@
-FROM composer:1.10.22 AS composer
+FROM composer:2 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:7.4-fpm-alpine
+FROM php:8-fpm-alpine3.12
 
 ENV DEPLOYER_VERSION=6.8.0
 
@@ -11,29 +11,6 @@ RUN apk update --no-cache \
         openssh-client \
         nodejs-current \
         nodejs-npm \
-        php7 \
-        php7-openssl \
-        php7-json \
-        php7-phar \
-        php7-gd \
-        php7-intl \
-        php7-zlib \
-        php7-curl \
-        php7-mbstring \
-        php7-iconv \
-        php7-pear \
-        php7-tokenizer \
-        php7-dev \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-dom \
-        php7-xml \
-        php7-simplexml \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-fileinfo \
-        php7-zip \
-        php7-ctype \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
