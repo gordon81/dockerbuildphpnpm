@@ -1,4 +1,4 @@
-FROM composer:1.10.22 AS composer
+FROM composer:1 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
