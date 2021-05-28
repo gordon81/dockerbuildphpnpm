@@ -6,7 +6,7 @@ FROM php:7.2-fpm-alpine3.12
 
 ENV DEPLOYER_VERSION=6.8.0
 
-RUN apk update --no-cache \
+RUN apk -U upgrade --no-cache \
     && apk add --no-cache \
         openssh-client \
         nodejs-current \
