@@ -2,9 +2,9 @@ FROM composer:2 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:8-fpm-alpine3.12
+FROM php:8.1-alpine3.14
 
-ENV DEPLOYER_VERSION=6.8.0
+ENV DEPLOYER_VERSION=7.1.3
 
 RUN apk update --no-cache \
     && apk add --no-cache \
