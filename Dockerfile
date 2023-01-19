@@ -2,15 +2,15 @@ FROM composer:1 AS composer
 
 FROM jakubfrajt/docker-ci-php-security-checker:1.0.0 AS  checker
 
-FROM php:7.2-fpm-alpine3.12
+FROM php:7.2-fpm-alpine3.16
 
 ENV DEPLOYER_VERSION=6.8.0
 
 RUN apk -U upgrade --no-cache \
     && apk add --no-cache \
         openssh-client \
-        nodejs-current \
-        nodejs-npm \
+        nodejs \
+        nodejs \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
