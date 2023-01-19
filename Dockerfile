@@ -9,8 +9,8 @@ ENV DEPLOYER_VERSION=6.8.0
 RUN apk update --no-cache \
     && apk add --no-cache \
         openssh-client \
-        nodejs-current \
-        nodejs-npm \
+        nodejs \
+        npm \
         imagemagick \
         imagemagick-libs \
         imagemagick-dev \
